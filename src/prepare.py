@@ -7,6 +7,17 @@ import re
 import sys
 import os
 import shutil
+from PyPDF2 import PdfFileMerger
+
+def pdf_pages_only(pdf, pages: list) -> PdfFileMerger:
+    merger = PdfFileMerger()
+    for p in pages:
+        if p < 1:
+            raise Exception(
+                f"Pdf page {p} is too low. Page numbering starts with 1."
+            )
+        merger.append(f, pages=(p-1,p))
+    return merger
 
 def read_content(content: str) -> list:
     content = list(yaml.safe_load_all(content))
@@ -119,9 +130,10 @@ if __name__ == "__main__":
                     if not a["pages"]:
                         shutil.copy(a["oldname"], newname)
                     else:
-                        raise Exception(
-                            "Error: Page extraction not implemented yet"
-                        )
+                        with open(a["oldname"], "rb") as f:
+                            merger = pdf_pages_only(f, a["pages"])
+                            with open(newname, "wb") as g:
+                                merger.write(g)
     except Exception as e:
         raise e     #!DEBUG-ONLY
         print(e, file=sys.stdout)
