@@ -38,6 +38,10 @@ if test -f "~/.config/mbat/default.content"; then
 cat "~/.config/mbat/default.content" > mbat.content
 else
 cat <<EOF > mbat.content
+# The content is written in yaml format. You can include comments
+# by prefixing lines with an octothorp (like these). To add more
+# recipients, simply add another dashed line below like the one
+# you see between recipients one and two.
 id: recipient_one
 name: Recipient One
 email: recipi@ent.one
@@ -45,9 +49,5 @@ email: recipi@ent.one
 id: recipient_two
 name: Recipient Two
 email: second@recipi.ent
-# The content is written in yaml format. You can include comments
-# by prefixing lines with an octothorp (like these). To add more
-# recipients, simply add another dashed line below like the one
-# you see between recipients one and two.
 EOF
 fi
