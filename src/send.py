@@ -18,7 +18,7 @@ import sys, os, subprocess, mimetypes
 from pathlib import Path
 from configparser import ConfigParser
 from email.parser import Parser
-from email.policy import default
+from email.policy import default, compat32
 from email.message import EmailMessage
 from email.utils import parseaddr, formatdate
 
@@ -96,12 +96,13 @@ if __name__ == "__main__":
             if html.strip():
                 mail.get_body().add_alternative(html, subtype="html")
 
+        raw_mail = mail.as_bytes(policy=compat32)
         if "dump" in sys.argv:
-            run_command("cat", mail.as_bytes())
+            run_command("cat", raw_mail)
         if "send" in sys.argv:
-            run_command(config["sendmail"], mail.as_bytes())
+            run_command(config["sendmail"], raw_mail)
         if "store" in sys.argv:
-            run_command(config["post_sendmail"], mail.as_bytes())
+            run_command(config["post_sendmail"], raw_mail)
     except Exception as e:
         raise e     #!DEBUG-ONLY
         print(e, file=sys.stderr)
