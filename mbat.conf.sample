@@ -1,0 +1,20 @@
+# Example configuration file. Save a similar file to
+# ~/.config/mbat/mbat.conf for specific configuration.
+
+[DEFAULT]
+    # Uncomment and adjust these lines to run a filter on the plain
+    # text of outgoing emails. This allows convenient sending of
+    # text/plain and text/html multipart messages by simply writing
+    # the body in markdown.
+  ; use_alt_html_filter = false
+  ; alt_html_filter = pandoc -f html -t markdown
+
+[account.myself]
+    # Every account that is to be used for sending emails needs to be
+    # configured in its own section. The section name does not matter.
+    # There needs to be some section containing a valid from_address,
+    # however. Only the address part is matched. Specifying a display
+    # name is optional and doesn't change program behaviour.
+    from_address = My Self <my@self.net>
+    sendmail = sendmail -t
+    post_sendmail = notmuch insert --folder=Sent -inbox -unread +sent
