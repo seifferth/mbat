@@ -4,3 +4,4 @@
 
 - python3
 - python-pyyaml (if not included with python3 yet)
+- python3-pypdf2
