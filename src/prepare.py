@@ -135,5 +135,5 @@ if __name__ == "__main__":
                         merger.close()
     except Exception as e:
         raise e     #!DEBUG-ONLY
-        print(e, file=sys.stdout)
+        print(e, file=sys.stderr)
         exit(1)
