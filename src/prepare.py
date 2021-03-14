@@ -9,14 +9,14 @@ import os
 import shutil
 from PyPDF2 import PdfFileMerger
 
-def pdf_pages_only(pdf, pages: list) -> PdfFileMerger:
+def pdf_pages(pdf: str, pages: list) -> PdfFileMerger:
     merger = PdfFileMerger()
     for p in pages:
         if p < 1:
             raise Exception(
                 f"Pdf page {p} is too low. Page numbering starts with 1."
             )
-        merger.append(f, pages=(p-1,p))
+        merger.append(pdf, pages=(p-1,p))
     return merger
 
 def read_content(content: str) -> list:
@@ -130,10 +130,9 @@ if __name__ == "__main__":
                     if not a["pages"]:
                         shutil.copy(a["oldname"], newname)
                     else:
-                        with open(a["oldname"], "rb") as f:
-                            merger = pdf_pages_only(f, a["pages"])
-                            with open(newname, "wb") as g:
-                                merger.write(g)
+                        merger = pdf_pages(a["oldname"], a["pages"])
+                        merger.write(newname)
+                        merger.close()
     except Exception as e:
         raise e     #!DEBUG-ONLY
         print(e, file=sys.stdout)
