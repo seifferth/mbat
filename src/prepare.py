@@ -20,7 +20,7 @@ def pdf_pages(pdf: str, pages: list) -> PdfFileMerger:
     return merger
 
 def read_content(content: str) -> list:
-    content = list(yaml.safe_load_all(content))
+    content = list(filter(lambda x: x != None, yaml.safe_load_all(content)))
     return content
 
 def get_vars(template: str):
