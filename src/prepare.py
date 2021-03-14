@@ -53,7 +53,7 @@ def get_atts(mail: str) -> tuple:
                 else:
                     pages.extend(range(f, t-1))
             else:
-                pages.append(int(i))
+                pages.append(int(r))
         return pages
     def match_with_pages(line: str):
         match = re.fullmatch(r"!\[(.+?)\]\((.+?):([0-9,-]*)\)\s*", line)
