@@ -18,7 +18,7 @@ def get_vars(template: str):
 def validate_config(config: list, template_vars: list) -> None:
     err = list()
     def mkerr(item: int, key: str):
-        return f"Error in mailbatch.config, item {item}: " + \
+        return f"Error in mbat.config, item {item}: " + \
                f"'{key}' is not defined"
     for i, item in enumerate(config, 1):
         if "id" not in item:
@@ -93,13 +93,13 @@ if __name__ == "__main__":
         clean_up()
         if "--clean" in sys.argv:
             exit(0)
-        with open("mailbatch.template") as f:
+        with open("mbat.template") as f:
             template = f.read()
         vs = get_vars(template)
-        with open("mailbatch.config") as f:
+        with open("mbat.config") as f:
             config = read_config(f.read())
         if not config:
-            raise Exception("No entries in 'mailbatch.config'")
+            raise Exception("No entries in 'mbat.config'")
         validate_config(config, vs)
         for i, item in enumerate(config, 1):
             with open(f"{item['id']}.mail", "w") as f:

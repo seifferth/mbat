@@ -4,7 +4,7 @@ set -e
 init() {
 #include init.sh $@
 echo "It looks like you're running a non-compiled version " \
-     "of mailbatch that doesn't include init.sh." | fmt >&2
+     "of mbat that doesn't include init.sh." | fmt >&2
 exit 120
 #endinclude
 }
@@ -12,7 +12,7 @@ exit 120
 prepare() {
 #include prepare.py $@
 echo "It looks like you're running a non-compiled version " \
-     "of mailbatch that doesn't include prepare.py." | fmt >&2
+     "of mbat that doesn't include prepare.py." | fmt >&2
 exit 120
 #endinclude
 }
@@ -28,18 +28,17 @@ prepare --clean
 
 help() {
 cat <<EOF
-Usage: mailbatch <command> [directory]
+Usage: mbat <command> [directory]
 
 Commands:
-  init      Initialize a new batch by copying example
-            'mailbatch.template' and 'mailbatch.config'
-            files into the specified directory.
-  prepare   Expand template into mutliple mails and attachment
-            directories.
-  send      Send out expanded emails. 'mailbatch prepare' needs
-            to be run first.
-  clean     Remove expanded mails and attachment directories.
-  help      Print this help message and exit.
+    init    Initialize a new batch by copying example 'mbat.template'
+            and 'mbat.config' files into the specified directory.
+    prep    Prepare mails by expanding the template into mutliple mail
+            files and attachment directories.
+    send    Send out expanded emails. 'mbat prepare' needs to be
+            executed first.
+    clean   Remove expanded mails and attachment directories.
+    help    Print this help message and exit.
 
 EOF
 }
@@ -64,7 +63,7 @@ case "$1" in
     "init")
         init "$2"
         ;;
-    "prepare")
+    "prep")
         try_cd "$2"
         prepare
         ;;

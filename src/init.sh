@@ -12,10 +12,10 @@ if test "$(ls -A .|wc -l)" -gt 0; then
     exit 1
 fi
 
-if test -f "~/.config/mailbatch/default.template"; then
-cat "~/.config/mailbatch/default.template" > mailbatch.template
+if test -f "~/.config/mbat/default.template"; then
+cat "~/.config/mbat/default.template" > mbat.template
 else
-cat <<EOF > mailbatch.template
+cat <<EOF > mbat.template
 From: Someone <sender@e.mail>
 To: {name} <{email}>
 Cc:
@@ -34,10 +34,10 @@ To use a variable in an attachment, simply specify it:
 EOF
 fi
 
-if test -f "~/.config/mailbatch/default.config"; then
-cat "~/.config/mailbatch/default.config" > mailbatch.config
+if test -f "~/.config/mbat/default.config"; then
+cat "~/.config/mbat/default.config" > mbat.config
 else
-cat <<EOF > mailbatch.config
+cat <<EOF > mbat.config
 id: recipient_one
 name: Recipient One
 email: recipi@ent.one

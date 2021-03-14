@@ -1,4 +1,4 @@
-# Mailbatch
+# mbat – batch processing tool for sending emails
 
 ## Dependencies
 
