@@ -1,6 +1,6 @@
 all: out/mbat out/mbat.1
 
-out/mbat: src/main.sh src/init.sh src/prepare.py process_includes.sh
+out/mbat: src/main.sh src/init.sh src/prepare.py src/send.py process_includes.sh
 	test -d out || mkdir out
 	cd src; ../process_includes.sh < main.sh \
 		| grep -v '#!DEBUG-ONLY' \
