@@ -18,8 +18,17 @@ exit 120
 }
 
 send() {
-echo "Send not implemented yet" >&2
-exit 1
+ls *.mail|sed 's,\.mail$,,g'|while read -r f; do
+printf "Sending $f.mail ..."
+#include send.py "$f" send store
+echo "It looks like you're running a non-compiled version " \
+     "of mbat that doesn't include send.py." | fmt >&2
+exit 120
+#endinclude
+test -d "$f" && rm -r "$f"
+rm "$f.mail"
+printf " OK\n"
+done
 }
 
 clean() {
