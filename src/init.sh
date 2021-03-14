@@ -27,9 +27,11 @@ In-Reply-To:
 The email body goes here. You can add variables like {id} or {name}
 anywhere in the body. You can also use them in attachments. Attachments
 are specified as follows:
+
 ![filename_the_recipient_sees.pdf](file_on_disk.pdf)
 
 To use a variable in an attachment, simply specify it:
+
 ![file_for_{id}.pdf](file_on_disk.pdf)
 EOF
 fi

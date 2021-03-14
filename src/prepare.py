@@ -29,7 +29,7 @@ def validate_content(content: list, template_vars: list) -> None:
     if err:
         raise Exception("\n".join(err))
 
-def get_atts(template: str) -> tuple:
+def get_atts(mail: str) -> tuple:
     def extract_pages(pages: str) -> list:
         ranges = re.split(",", pages)
         pages = list()
@@ -61,15 +61,22 @@ def get_atts(template: str) -> tuple:
                 "pages": list(),
             }
     atts = list()
-    content = list()
-    for line in template.splitlines():
-        if match_with_pages(line):
-            atts.append(match_with_pages(line))
-        elif match_no_pages(line):
-            atts.append(match_no_pages(line))
+    content = mail
+    refs = re.findall(r"(\s*\n)+(!\[.*\]\(.*\))(\s*\n)+", mail)
+    for i, r in enumerate(refs, 1):
+        if match_with_pages(r[1]):
+            atts.append(match_with_pages(r[1]))
+        elif match_no_pages(r[1]):
+            atts.append(match_no_pages(r[1]))
         else:
-            content.append(line)
-    content = "\n".join(content)
+            raise Exception(
+                f"Error while processing attachment reference {i}."
+            )
+        whitespace = "\n" * max(
+            len(re.findall("\n", r[0])),
+            len(re.findall("\n", r[2])),
+        )
+        content = content.replace(r[0]+r[1]+r[2], whitespace)
     content = re.sub("(\s*\n)*$", "", content) + "\n"
     return (content, atts)
 
