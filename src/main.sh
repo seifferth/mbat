@@ -44,7 +44,7 @@ Commands:
             'mbat.config' files into the specified directory.
     prep    Prepare mails by expanding the template into mutliple '*.mail'
             files and attachment directories.
-    send    Send out expanded emails. 'mbat prepare' needs to be executed
+    send    Send out expanded emails. 'mbat prep' needs to be executed
             first. Once sent, the prepared '*.mail' files and attachment
             directories will be deleted.
     clean   Remove expanded mails and attachment directories.
