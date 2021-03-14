@@ -44,6 +44,11 @@ cat <<EOF > mbat.content
 # by prefixing lines with an octothorp (like these). To add more
 # recipients, simply add another dashed line below like the one
 # you see between recipients one and two.
+#
+# Note that the 'id' field is mandatory and should not contain any
+# whitespace characters. It must also be unique. All other fields
+# are optional and can contain whitespace without issues.
+#
 id: recipient_one
 name: Recipient One
 email: recipi@ent.one
