@@ -46,6 +46,11 @@ def get_atts(mail: str) -> tuple:
             return "none"
         elif pages.strip().lower() == "all":
             return "all"
+        if not re.fullmatch("[0-9,-]+", pages):
+            raise Exception(
+                f"Error: Invalid page range: '{pages}'"
+            )
+        pages = re.sub(r"\s", "", pages)
         ranges = re.split(",", pages)
         pages = list()
         for r in ranges:
@@ -60,7 +65,7 @@ def get_atts(mail: str) -> tuple:
                 pages.append(int(r))
         return pages
     def match_with_pages(line: str):
-        match = re.fullmatch(r"!\[(.+?)\]\((.+?):([0-9,-]*)\)\s*", line)
+        match = re.fullmatch(r"!\[(.+?)\]\((.+?):(.*)\)\s*", line)
         if match:
             return {
                 "newname": match.groups()[0],
