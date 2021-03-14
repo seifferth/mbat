@@ -40,12 +40,13 @@ cat <<EOF
 Usage: mbat <command> [directory]
 
 Commands:
-    init    Initialize a new batch by copying example 'mbat.template'
-            and 'mbat.config' files into the specified directory.
-    prep    Prepare mails by expanding the template into mutliple mail
+    init    Initialize a new batch by copying example 'mbat.template' and
+            'mbat.config' files into the specified directory.
+    prep    Prepare mails by expanding the template into mutliple '*.mail'
             files and attachment directories.
-    send    Send out expanded emails. 'mbat prepare' needs to be
-            executed first.
+    send    Send out expanded emails. 'mbat prepare' needs to be executed
+            first. Once sent, the prepared '*.mail' files and attachment
+            directories will be deleted.
     clean   Remove expanded mails and attachment directories.
     help    Print this help message and exit.
 
