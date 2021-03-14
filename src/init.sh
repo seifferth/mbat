@@ -33,6 +33,24 @@ are specified as follows:
 To use a variable in an attachment, simply specify it:
 
 ![file_for_{id}.pdf](file_on_disk.pdf)
+
+If the attached file is a pdf document, mbat allows you to specify
+a page range by appending a colon to the filename. The specific page
+range can optionally be passed in using a variable in mbat.content:
+
+![pages_{pages}.pdf](file_on_disk.pdf:{pages})
+
+The page specification must be of the following form:
+
+1. A single page as a literal. E. g. 10
+2. A page range. E. g. 5-8
+3. Multiple single pages or page ranges separated by commas.
+   E. g. 5-8,10,12-15
+4. The special keyword 'all' or the special keyword 'none'. These
+   keywords cannot be combined with anything. Note that, instead of
+   specifying 'all', you can also simply omit the page specification
+   all together. Including only a trailing colon after the filename
+   is equivalent to specifying 'none'.
 EOF
 fi
 
