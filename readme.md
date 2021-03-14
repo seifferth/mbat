@@ -16,23 +16,25 @@ Simply run `make` to compile it.
 A basic mbat session looks like this:
 
 ```
-mbat init   # Initialize the current working directory for mbat. Note that
-            # the current working directory needs to be empty for mbat
-            # to initialize it.
+mbat init   # Initialize the current working directory for mbat.
+            # Note that the current working directory must be
+            # empty for mbat to initialize it.
 
 # Manually adjust 'mbat.template' and 'mbat.content'
 
-mbat prep   # Prepare '*.mail' files and optional attachment directories.
+mbat prep   # Prepare '*.mail' files and optional attachment
+            # directories.
 
-# Manually confirm that '*.mail' and attachments are as desired. These files
-# can still be adjusted manually at this stage. It is also possible to
-# recreate all files by running 'mbat prep' again.
+# Manually confirm that '*.mail' and attachments are as desired.
+# These files can still be adjusted manually at this stage. It
+# is also possible to recreate all files by running 'mbat prep'
+# again.
 
-mbat send   # Send out emails as specified in the '*.mail' files. Files
-            # will be removed once the email has been sent out.
+mbat send   # Send out emails as specified in the '*.mail' files.
+            # Files will be removed once the email has been sent.
 
-# Once the emails have been sent, the current working directory can be
-# removed manually.
+# Once the emails have been sent, the current working directory
+# can be removed manually.
 ```
 
 ## Configuration
@@ -45,22 +47,23 @@ configuration file could look like this:
 # ~/.config/mbat/mbat.conf for specific configuration.
 
 [DEFAULT]
-    # Uncomment and adjust these lines to run a filter on the plain
-    # text of outgoing emails. This allows convenient sending of
-    # text/plain and text/html multipart messages by simply writing
-    # the body in markdown.
+    # Uncomment and adjust these lines to run a filter on the
+    # plain text of outgoing emails. This allows convenient
+    # sending of text/plain and text/html multipart messages
+    # by simply writing the body in markdown.
   ; use_alt_html_filter = false
   ; alt_html_filter = pandoc -f html -t markdown
 
 [account.myself]
-    # Every account that is to be used for sending emails needs to be
-    # configured in its own section. The section name does not matter.
-    # There needs to be some section containing a valid from_address,
-    # however. Only the address part is matched. Specifying a display
-    # name is optional and doesn't change program behaviour.
+    # Every account that is to be used for sending emails
+    # needs to be configured in its own section. The section
+    # name does not matter.  There needs to be some section
+    # containing a valid from_address, however. Only the
+    # address part is matched. Specifying a display name is
+    # optional and doesn't change program behaviour.
     from_address = My Self <my@self.net>
     sendmail = sendmail -t
-    post_sendmail = notmuch insert --folder=Sent -inbox -unread +sent
+    post_sendmail = notmuch insert -inbox -unread +sent
 ```
 
 There are also two optional configuration files for `mbat.template`
