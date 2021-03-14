@@ -42,6 +42,10 @@ def validate_content(content: list, template_vars: list) -> None:
 
 def get_atts(mail: str) -> tuple:
     def extract_pages(pages: str) -> list:
+        if not pages or pages.strip().lower() in ("", "none"):
+            return "none"
+        elif pages.strip().lower() == "all":
+            return "all"
         ranges = re.split(",", pages)
         pages = list()
         for r in ranges:
@@ -69,7 +73,7 @@ def get_atts(mail: str) -> tuple:
             return {
                 "newname": match.groups()[0],
                 "oldname": match.groups()[1],
-                "pages": list(),
+                "pages": "all"
             }
     atts = list()
     content = mail
@@ -127,8 +131,10 @@ if __name__ == "__main__":
                 if atts: os.makedirs(item["id"], exist_ok=True)
                 for a in atts:
                     newname = os.path.join(item["id"], a["newname"])
-                    if not a["pages"]:
+                    if a["pages"] == "all":
                         shutil.copy(a["oldname"], newname)
+                    elif a["pages"] == "none":
+                        pass
                     else:
                         merger = pdf_pages(a["oldname"], a["pages"])
                         merger.write(newname)
