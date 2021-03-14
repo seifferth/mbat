@@ -8,19 +8,19 @@ import sys
 import os
 import shutil
 
-def read_config(config: str) -> list:
-    config = list(yaml.safe_load_all(config))
-    return config
+def read_content(content: str) -> list:
+    content = list(yaml.safe_load_all(content))
+    return content
 
 def get_vars(template: str):
     return re.findall("{(.*?)}", template, re.DOTALL)
 
-def validate_config(config: list, template_vars: list) -> None:
+def validate_content(content: list, template_vars: list) -> None:
     err = list()
     def mkerr(item: int, key: str):
-        return f"Error in mbat.config, item {item}: " + \
+        return f"Error in mbat.content, item {item}: " + \
                f"'{key}' is not defined"
-    for i, item in enumerate(config, 1):
+    for i, item in enumerate(content, 1):
         if "id" not in item:
             err.append(mkerr(i, "id"))
         for key in template_vars:
@@ -96,12 +96,12 @@ if __name__ == "__main__":
         with open("mbat.template") as f:
             template = f.read()
         vs = get_vars(template)
-        with open("mbat.config") as f:
-            config = read_config(f.read())
-        if not config:
-            raise Exception("No entries in 'mbat.config'")
-        validate_config(config, vs)
-        for i, item in enumerate(config, 1):
+        with open("mbat.content") as f:
+            content = read_content(f.read())
+        if not content:
+            raise Exception("No entries in 'mbat.content'")
+        validate_content(content, vs)
+        for i, item in enumerate(content, 1):
             with open(f"{item['id']}.mail", "w") as f:
                 content = template.format(**item)
                 content, atts = get_atts(template.format(**item))
