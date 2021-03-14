@@ -41,7 +41,7 @@ Usage: mbat <command> [directory]
 
 Commands:
     init    Initialize a new batch by copying example 'mbat.template' and
-            'mbat.config' files into the specified directory.
+            'mbat.content' files into the specified directory.
     prep    Prepare mails by expanding the template into mutliple '*.mail'
             files and attachment directories.
     send    Send out expanded emails. 'mbat prep' needs to be executed
