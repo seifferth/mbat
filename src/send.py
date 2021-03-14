@@ -18,15 +18,19 @@ import sys, os, subprocess, mimetypes
 from pathlib import Path
 from configparser import ConfigParser
 from email.parser import Parser
-from email.policy import default, compat32
 from email.message import EmailMessage
 from email.utils import parseaddr, formatdate
 
 def bundle_mail(name: str) -> (EmailMessage, str):
     with open(f"{name}.mail") as f:
-        mail = Parser(policy=default).parse(f)
-    mail.add_header("Date", formatdate(localtime=True))
-    plain_body = mail.get_payload()     # Something about mime types
+        user_input = Parser().parse(f)
+    mail = EmailMessage()
+    for key in user_input.keys():
+        if user_input.get(key):
+            mail.add_header(key, user_input.get(key))
+    if "Date" not in user_input:
+        mail.add_header("Date", formatdate(localtime=True))
+    plain_body = user_input.get_payload()
     mail.set_content(plain_body)
     if os.path.isdir(name):
         for a in os.listdir(name):
@@ -96,13 +100,12 @@ if __name__ == "__main__":
             if html.strip():
                 mail.get_body().add_alternative(html, subtype="html")
 
-        raw_mail = mail.as_bytes(policy=compat32)
         if "dump" in sys.argv:
-            run_command("cat", raw_mail)
+            run_command("cat", mail.as_bytes())
         if "send" in sys.argv:
-            run_command(config["sendmail"], raw_mail)
+            run_command(config["sendmail"], mail.as_bytes())
         if "store" in sys.argv:
-            run_command(config["post_sendmail"], raw_mail)
+            run_command(config["post_sendmail"], mail.as_bytes())
     except Exception as e:
         raise e     #!DEBUG-ONLY
         print(e, file=sys.stderr)
