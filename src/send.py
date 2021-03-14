@@ -20,11 +20,12 @@ from configparser import ConfigParser
 from email.parser import Parser
 from email.policy import default
 from email.message import EmailMessage
-from email.utils import parseaddr
+from email.utils import parseaddr, formatdate
 
 def bundle_mail(name: str) -> (EmailMessage, str):
     with open(f"{name}.mail") as f:
         mail = Parser(policy=default).parse(f)
+    mail.add_header("Date", formatdate(localtime=True))
     plain_body = mail.get_content()     # Something about mime types
     mail.set_content(plain_body)
     if os.path.isdir(name):
