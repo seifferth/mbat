@@ -121,10 +121,10 @@ if __name__ == "__main__":
         if "--clean" in sys.argv:
             exit(0)
         with open("mbat.template") as f:
-            template = f.read()
+            template = f.read() + "\n"
         vs = get_vars(template)
         with open("mbat.content") as f:
-            content = read_content(f.read())
+            content = read_content(f.read() + "\n")
         if not content:
             raise Exception("No entries in 'mbat.content'")
         validate_content(content, vs)
